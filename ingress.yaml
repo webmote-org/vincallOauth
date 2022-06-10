@@ -1,0 +1,24 @@
+﻿apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: vincalloauth
+  namespace: NAMESPACE
+  annotations:
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: 50m
+spec:
+  tls:
+  - hosts:
+    - oauthtest.vincall.net   
+    secretName: oauth.vincall.net 
+  rules:
+  - host: oauthtest.vincall.net
+    http:
+      paths:
+        - path: /(.*)
+          backend:
+            serviceName: vincalloauth
+            servicePort: 80

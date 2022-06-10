@@ -1,0 +1,57 @@
+﻿{
+   "CodeGenerationMode": 0,
+   "ContextClassName": "VincallDBContext",
+   "ContextNamespace": null,
+   "DefaultDacpacSchema": null,
+   "FilterSchemas": false,
+   "IncludeConnectionString": false,
+   "ModelNamespace": null,
+   "OutputContextPath": null,
+   "OutputPath": null,
+   "ProjectRootNamespace": "Vincall.Infrastructure",
+   "Schemas": null,
+   "SelectedHandlebarsLanguage": 0,
+   "SelectedToBeGenerated": 0,
+   "Tables": [
+      {
+         "Name": "[dbo].[Agent]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[CallList]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[Setting]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[SysVersion]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[TwilioSetting]",
+         "ObjectType": 0
+      },
+      {
+         "Name": "[dbo].[User]",
+         "ObjectType": 0
+      }
+   ],
+   "UiHint": "WIN-IVLVROOBVB8\\SQLSERVER2019.Vincall",
+   "UseBoolPropertiesWithoutDefaultSql": false,
+   "UseDatabaseNames": false,
+   "UseDbContextSplitting": false,
+   "UseFluentApiOnly": true,
+   "UseHandleBars": false,
+   "UseInflector": true,
+   "UseLegacyPluralizer": false,
+   "UseNoConstructor": false,
+   "UseNoDefaultConstructor": false,
+   "UseNoNavigations": false,
+   "UseNoObjectFilter": false,
+   "UseNodaTime": false,
+   "UseNullableReferences": false,
+   "UseSchemaFolders": false,
+   "UseSpatial": false
+}
