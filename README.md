@@ -48,7 +48,5 @@ dotnet run
 ```
 Finally, Let's check database when opening Microsoft SQL server management studio.
 
-![image.png](/.attachments/image-afda3245-7b47-40fe-921b-cd1f5bd4a281.png)
-
 That is ok.
 
