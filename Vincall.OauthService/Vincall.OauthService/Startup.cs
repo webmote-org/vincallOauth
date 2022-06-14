@@ -33,6 +33,7 @@ using Microsoft.AspNetCore.DataProtection.Repositories;
 using Vincall.Infrastructure;
 using Vincall.OauthService.Middleware;
 using IdentityServer4.Validation;
+using Microsoft.AspNetCore.DataProtection.EntityFrameworkCore;
 
 namespace Vincall.OauthService
 {
@@ -96,10 +97,18 @@ namespace Vincall.OauthService
                     p.AllowCredentials();
                     p.SetPreflightMaxAge(TimeSpan.FromSeconds(24 * 60 * 60));
                 }));
-           
+            var migrationAssembly = typeof(Startup).GetTypeInfo().Assembly.GetName().Name;
+            services.AddDbContextPool<DataProtectionKeysContext>((sp, builder) =>
+            {
+                builder.UseSqlServer(connectionString, b => {
+                    b.MigrationsAssembly(migrationAssembly);
+                });
+                builder.UseInternalServiceProvider(sp);
+            });
+            services.AddScoped(s => (DbContext)s.GetRequiredService<DataProtectionKeysContext>());
             services.AddOidcStateDataFormatterCache("aad");
             services.AddScoped<ITokenRequestValidator, TokenRequestValidator>();
-
+            //services.AddSingleton<IDataProtectionKeyContext,DataProtectionKeysContext>();
             services.AddSingleton<IXmlRepository, CustomXmlRepository>();
             string Name = ".AspNet.SharedCookie";
             services.AddDataProtection()
@@ -132,7 +141,16 @@ namespace Vincall.OauthService
                 using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
                 {
                     serviceScope.ServiceProvider.GetRequiredService<PersistedGrantDbContext>().Database.Migrate();
-
+                    var protectionContext = serviceScope.ServiceProvider.GetRequiredService<VincallDBContext>();
+                    protectionContext.Database.Migrate();
+                    if (!protectionContext.DataProtectionKeys.Any())
+                    {
+                        foreach (var resource in Configs.GetDataProtectionKeys())
+                        {
+                            protectionContext.DataProtectionKeys.Add(resource);
+                        }
+                        protectionContext.SaveChanges();
+                    }
                     var context = serviceScope.ServiceProvider.GetRequiredService<ConfigurationDbContext>();
                     context.Database.Migrate();
                     if (!context.Clients.Any())

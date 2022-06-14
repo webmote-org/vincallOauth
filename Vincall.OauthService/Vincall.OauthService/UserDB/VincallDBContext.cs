@@ -42,6 +42,22 @@ namespace Vincall.Infrastructure
                 entity.Property(e => e.UserName).HasMaxLength(50);
             });
 
+            modelBuilder.Entity<DataProtectionKey>(entity =>
+            {
+                entity.ToTable("DataProtectionKeys");
+
+                entity.Property(e => e.Id).ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                entity.Property(e => e.FriendlyName)
+                    .HasColumnType("nvarchar(max)");
+
+                entity.Property(e => e.Xml)
+                .HasColumnType("nvarchar(max)");
+
+            });
+
             OnModelCreatingPartial(modelBuilder);
         }
 
