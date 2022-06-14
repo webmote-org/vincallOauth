@@ -21,7 +21,6 @@ namespace Vincall.OauthService.Models
             {
                 // backward compat
                 new ApiScope("api"),
-                new ApiScope("connectapi"),
                 
                 // more formal
                 new ApiScope("api.scope1"),
